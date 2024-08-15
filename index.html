@@ -5,27 +5,82 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Water Reminder</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
-        .progress { width: 100%; background-color: #e0e0e0; }
-        .progress-bar { width: 0%; height: 30px; background-color: #76c7c0; }
-        button { margin: 5px; padding: 10px 20px; }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+        .container {
+            background: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #76c7c0;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #76c7c0;
+            color: white;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #5ab1a5;
+        }
+        .progress {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+        .progress-bar {
+            width: 0%;
+            height: 30px;
+            background-color: #76c7c0;
+            transition: width 0.4s ease;
+        }
     </style>
 </head>
 <body>
-    <h1>Water Reminder</h1>
-    <div>
+    <div class="container">
+        <h1>Water Reminder</h1>
         <input type="text" id="username" placeholder="Enter your name">
         <button onclick="startTracking()">Start</button>
-    </div>
-    <div id="logSection" style="display:none;">
-        <h2>Hello, <span id="user"></span>! Log your water intake:</h2>
-        <div id="glasses"></div>
-        <div class="progress">
-            <div class="progress-bar" id="progressBar"></div>
+        <div id="logSection" style="display:none;">
+            <h2>Hello, <span id="user"></span>! Log your water intake:</h2>
+            <div id="glasses"></div>
+            <div class="progress">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
         </div>
     </div>
 
-    <!-- JavaScript goes here -->
     <script>
         function startTracking() {
             const username = document.getElementById('username').value;
@@ -38,10 +93,13 @@
             updateProgress(glassesLogged);
 
             const glassesDiv = document.getElementById('glasses');
+            glassesDiv.innerHTML = ""; // Clear previous buttons if any
             for (let i = 1; i <= 8; i++) {
                 const btn = document.createElement('button');
                 btn.innerText = `Glass ${i}`;
                 btn.disabled = i <= glassesLogged;
+                btn.style.padding = "10px 20px";
+                btn.style.margin = "5px";
                 btn.onclick = function () {
                     glassesLogged++;
                     localStorage.setItem('glassesLogged', glassesLogged);
@@ -58,7 +116,6 @@
             if (glasses === 8) alert("Congrats! You've reached your goal!");
         }
 
-        // Optional: reminder every hour
         setInterval(() => {
             alert("Don't forget to drink water!");
         }, 3600000);
