@@ -65,6 +65,11 @@
             background-color: #76c7c0;
             transition: width 0.4s ease;
         }
+        #logSection h2 {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
@@ -89,7 +94,7 @@
             document.getElementById('user').innerText = username;
             document.getElementById('logSection').style.display = 'block';
 
-            let glassesLogged = JSON.parse(localStorage.getItem('glassesLogged')) || 0;
+            let glassesLogged = JSON.parse(localStorage.getItem(username + '_glassesLogged')) || 0;
             updateProgress(glassesLogged);
 
             const glassesDiv = document.getElementById('glasses');
@@ -102,7 +107,7 @@
                 btn.style.margin = "5px";
                 btn.onclick = function () {
                     glassesLogged++;
-                    localStorage.setItem('glassesLogged', glassesLogged);
+                    localStorage.setItem(username + '_glassesLogged', glassesLogged);
                     updateProgress(glassesLogged);
                     btn.disabled = true;
                 };
